@@ -3,7 +3,7 @@ import React,{useState} from 'react'
 
 const CreateTodo = () => {
 
-   
+   let [nameerr,setnameerr] = useState("")
 
     let [FormData, setFormData] = useState({
         fullname: "",
@@ -34,7 +34,8 @@ const CreateTodo = () => {
                 designation: FormData.designation,
                 idnumber: FormData.employeeid
             })
-            console.log(response.data);
+            setnameerr(response.data.error)
+            console.log();
         }
         catch (error) {
             console.error('Error posting data:', error);
@@ -55,6 +56,7 @@ const CreateTodo = () => {
         <div className='input_group'>
             <label>Name</label>
             <input name='fullname' onChange={handleForm} value={FormData.fullname} type='text' placeholder='Employee Name'/>
+            <span>{nameerr}</span>
         </div>
         <div className='input_group'>
             <label>Email</label>
