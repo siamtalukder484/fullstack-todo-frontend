@@ -54,7 +54,7 @@ let handleCalcelModal =()=>{
                 <h3>Update Employee ID</h3>
                 <div className='input_group'>
                     <label>Name</label>
-                    <input name='fullname' value={editdatea.fullname} type='text' placeholder='Employee Name'/>
+                    <input name='fullname' onChange={(e)=>setEditdata(...editdatea, e.target.value)} value={editdatea.fullname} type='text' placeholder='Employee Name'/>
                     <span></span>
                 </div>
                 <div className='input_group'>
