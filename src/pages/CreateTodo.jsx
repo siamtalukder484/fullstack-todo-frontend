@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React,{useState} from 'react'
+import { Puff } from 'react-loader-spinner'
 
 const CreateTodo = () => {
 
+    let [loader, setLoader] = useState(false);
    let [nameerr,setnameerr] = useState("")
 
     let [FormData, setFormData] = useState({
@@ -26,7 +28,7 @@ const CreateTodo = () => {
     }
 
     let handleSubmit = async () => {
-        
+        setLoader(true)
         try {
             const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',{
                 fullname: FormData.fullname,
@@ -46,12 +48,27 @@ const CreateTodo = () => {
             designation: "",
             employeeid: "",
         })
+        setLoader(false)
        
     }
 
 
   return (
-    <div className='card_main'>
+      <div className='card_main'>
+        {loader &&
+            <div className='todo_loader'>
+                <Puff
+                height="100"
+                width="100"
+                radius={1}
+                color="#fff"
+                ariaLabel="puff-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                />
+            </div>
+          }
         <h3>Create Employee ID</h3>
         <div className='input_group'>
             <label>Name</label>
