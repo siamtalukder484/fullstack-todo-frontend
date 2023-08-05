@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CreateTodo from './pages/CreateTodo'
 import TodoCard from './pages/TodoCard'
+import GithubCon from './pages/GithubCon'
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <div className='main'>
         <div className='main_body'>
             <TodoCard/>
+            <GithubCon/>
         </div>
         <div className='create_body'>
             <CreateTodo/>

@@ -6,10 +6,12 @@ const CreateTodo = () => {
 
     let [loader, setLoader] = useState(false);
    let [nameerr,setnameerr] = useState("")
+   let [load,setLoad] = useState(false)
 
     let [FormData, setFormData] = useState({
         fullname: "",
         email: "",
+        department: "",
         designation: "",
         employeeid: "",
 
@@ -17,6 +19,7 @@ const CreateTodo = () => {
     let [error, setError] = useState({
         fullname: "",
         email: "",
+        department: "",
         department: "",
         designation: "",
         employeeid: "",
@@ -29,25 +32,27 @@ const CreateTodo = () => {
 
     let handleSubmit = async () => {
         setLoader(true)
-        try {
-            const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',{
-                fullname: FormData.fullname,
-                email: FormData.email,
-                designation: FormData.designation,
-                idnumber: FormData.employeeid
-            })
-            setnameerr(response.data.error)
-            console.log(response);
-        }
-        catch (error) {
-            console.error('Error posting data:', error);
-        }
-        setFormData({
-            fullname: "",
-            email: "",
-            designation: "",
-            employeeid: "",
-        })
+        console.log(FormData);
+        // try {
+        //     const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',{
+        //         fullname: FormData.fullname,
+        //         email: FormData.email,
+        //         designation: FormData.designation,
+        //         idnumber: FormData.employeeid
+        //     })
+        //     setnameerr(response.data.error)
+        //     console.log(response);
+        //     setLoad(!load)
+        // }
+        // catch (error) {
+        //     console.error('Error posting data:', error);
+        // }
+        // setFormData({
+        //     fullname: "",
+        //     email: "",
+        //     designation: "",
+        //     employeeid: "",
+        // })
         setLoader(false)
        
     }
@@ -79,17 +84,17 @@ const CreateTodo = () => {
             <label>Email</label>
             <input name='email' onChange={handleForm} value={FormData.email} type='email' placeholder='Employee Email'/>
         </div>
-        {/* <div className='input_group'>
+        <div className='input_group'>
             <label>Department</label>
-            <select name='department'>
-                <option name='department' value="others" autoFocus>Others</option>
-                <option name='department' value="Web & Software">Web & Software</option>
-                <option name='department' value="Graphics & Multimedia">Graphics & Multimedia</option>
-                <option name='department' value="Digital Marketing">Digital Marketing</option>
-                <option name='department' value="Cyber Security">Cyber Security</option>
-                <option name='department' value="Film & Media">Film & Media</option>
+            <select onChange={handleForm} name='department'>
+                <option>Select Department</option>
+                <option value="Web & Software">Web & Software</option>
+                <option value="Graphics & Multimedia">Graphics & Multimedia</option>
+                <option value="Digital Marketing">Digital Marketing</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="Film & Media">Film & Media</option>
             </select>
-        </div> */}
+        </div>
         <div className='input_group'>
             <label>Designation</label>
             <input name='designation' onChange={handleForm} value={FormData.designation} type='text' placeholder='Designation'/>

@@ -11,6 +11,7 @@ const TodoCard = () => {
     let [editdata, setEditdata] = useState({});
     let [editmodal, setEditmodal] = useState(false);
     let [loader, setLoader] = useState(false);
+    let [load, setLoad] = useState(false);
 
     let [FormData, setFormData] = useState({
         editid: "",
@@ -29,7 +30,7 @@ const TodoCard = () => {
             setPost(response.data)
         }
         fetchData()
-    },[])
+    },[load])
     
 
 let handleDelete = (id) => {
@@ -39,6 +40,7 @@ let handleDelete = (id) => {
         }
     }).then((res)=>{
         setPostdelete(res.data.message);
+        setLoad(!load)
     })
 }
 
