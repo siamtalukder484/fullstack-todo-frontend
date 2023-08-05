@@ -37,7 +37,7 @@ const CreateTodo = () => {
                 idnumber: FormData.employeeid
             })
             setnameerr(response.data.error)
-            console.log();
+            console.log(response);
         }
         catch (error) {
             console.error('Error posting data:', error);

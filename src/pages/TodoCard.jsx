@@ -1,17 +1,27 @@
 import axios from 'axios'
 import React, { useEffect,useState } from 'react'
 import socketIOClient from 'socket.io-client';
+import { Puff } from 'react-loader-spinner'
 
 const ENDPOINT = 'http://localhost:5173';
 
 const TodoCard = () => {
     let [post, setPost] = useState(null);
     let [postdelete, setPostdelete] = useState("");
-    let [editdatea, setEditdata] = useState({});
+    let [editdata, setEditdata] = useState({});
     let [editmodal, setEditmodal] = useState(false);
-    
+    let [loader, setLoader] = useState(false);
 
+    let [FormData, setFormData] = useState({
+        editid: "",
+        fullname: "",
+        email: "",
+        designation: "",
+        employeeid: "",
     
+    })
+
+
     useEffect(()=>{
         const socket = socketIOClient(ENDPOINT);
         const fetchData = async () => {
@@ -34,19 +44,64 @@ let handleDelete = (id) => {
 
 let handleEdit = (item) => {
     setEditmodal(true)
-    setEditdata(item);
+    setFormData({
+        editid: item._id,
+        fullname: item.fullname,
+        email: item.email,
+        designation: item.designation,
+        employeeid: item.idnumber,
+    });
 }
 
-console.log(editdatea);
+
 let handleCalcelModal =()=>{
     setEditmodal(false)
     setEditdata();
 }
-      
+
+
+let handleUpdateForm = (e) => {
+    let {name, value} = e.target
+    setFormData({...FormData, [name]:value})
+}
+  
+
+let handleUpdateTodo = async () => {
+    setLoader(true)
+    
+    const updatetodo = await axios.put("http://localhost:8000/api/v1/todo/updatetodo",{
+        fullname: FormData.fullname,
+        email: FormData.email,
+        designation: FormData.designation,
+        idnumber: FormData.employeeid
+    },{
+        headers:{
+            id:FormData.editid
+        }
+    })
+    setEditmodal(false)
+    setLoader(false)
+    location.reload()
+    
+}
 
 
   return (
     <div className='item_main'>
+         {loader &&
+            <div className='todo_loader'>
+                <Puff
+                height="100"
+                width="100"
+                radius={1}
+                color="#fff"
+                ariaLabel="puff-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                />
+            </div>
+          }
         {editmodal &&
         <div className='update_todo'>
             <button onClick={handleCalcelModal} className='cancel'>Cancel</button>
@@ -54,51 +109,24 @@ let handleCalcelModal =()=>{
                 <h3>Update Employee ID</h3>
                 <div className='input_group'>
                     <label>Name</label>
-                    <input name='fullname' onChange={(e)=>setEditdata(...editdatea, e.target.value)} value={editdatea.fullname} type='text' placeholder='Employee Name'/>
+                    <input onChange={handleUpdateForm} name='editid' value={FormData.editid} type='hidden'/>
+                    <input onChange={handleUpdateForm} name='fullname' value={FormData.fullname} type='text' placeholder='Employee Name'/>
                     <span></span>
                 </div>
                 <div className='input_group'>
                     <label>Email</label>
-                    <input name='email' value={editdatea.email} type='email' placeholder='Employee Email'/>
+                    <input onChange={handleUpdateForm} name='email' value={FormData.email} type='email' placeholder='Employee Email'/>
                 </div>
-                {/* <div className='input_group'>
-                    <label>Department</label>
-                    <select name='department'>
-                        <option name='department' value="others" autoFocus>Others</option>
-                        <option name='department' value="Web & Software">Web & Software</option>
-                        <option name='department' value="Graphics & Multimedia">Graphics & Multimedia</option>
-                        <option name='department' value="Digital Marketing">Digital Marketing</option>
-                        <option name='department' value="Cyber Security">Cyber Security</option>
-                        <option name='department' value="Film & Media">Film & Media</option>
-                    </select>
-                </div> */}
                 <div className='input_group'>
                     <label>Designation</label>
-                    <input name='designation' value={editdatea.designation} type='text' placeholder='Designation'/>
+                    <input onChange={handleUpdateForm} name='designation' value={FormData.designation} type='text' placeholder='Designation'/>
                 </div>
                 <div className='input_group'>
                     <label>Employee ID</label>
-                    <input name='employeeid' value={editdatea.idnumber} type='number' placeholder='Employee ID'/>
+                    <input onChange={handleUpdateForm} name='employeeid' value={FormData.employeeid} type='number' placeholder='Employee ID'/>
                 </div>
-                    {/* <div className='input_group'>
-                    <label>Blood Group</label>
-                    <select>
-                        <option autoFocus>A+</option>
-                        <option>A-</option>
-                        <option>B+</option>
-                        <option>B-</option>
-                        <option>O+</option>
-                        <option>O-</option>
-                        <option>AB+</option>
-                        <option>AB-</option>
-                    </select>
-                </div> */}
-                {/* <div className='input_group'>
-                    <label>Employee Image</label>
-                    <input className='file' type='file'/>
-                </div> */}
                 <div className='input_group'>
-                    <button >Update</button>
+                    <button onClick={handleUpdateTodo}>Update</button>
                 </div>
             </div>
         </div>
@@ -116,7 +144,34 @@ let handleCalcelModal =()=>{
                 </div>
             ))
         }
-       
+                 {/* <div className='input_group'>
+                    <label>Department</label>
+                    <select name='department'>
+                        <option name='department' value="others" autoFocus>Others</option>
+                        <option name='department' value="Web & Software">Web & Software</option>
+                        <option name='department' value="Graphics & Multimedia">Graphics & Multimedia</option>
+                        <option name='department' value="Digital Marketing">Digital Marketing</option>
+                        <option name='department' value="Cyber Security">Cyber Security</option>
+                        <option name='department' value="Film & Media">Film & Media</option>
+                    </select>
+                </div> */}
+                  {/* <div className='input_group'>
+                    <label>Blood Group</label>
+                    <select>
+                        <option autoFocus>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                    </select>
+                </div> */}
+                {/* <div className='input_group'>
+                    <label>Employee Image</label>
+                    <input className='file' type='file'/>
+                </div> */}
     </div>
   )
 }
