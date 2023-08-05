@@ -121,10 +121,10 @@ const CreateTodo = () => {
                 <option value="AB-">AB-</option>
             </select>
         </div>
-        {/* <div className='input_group'>
+        <div className='input_group'>
             <label>Employee Image</label>
             <input className='file' type='file'/>
-        </div> */}
+        </div>
         <div className='input_group'>
             <button onClick={handleSubmit}>Submit</button>
         </div>

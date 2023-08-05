@@ -45,7 +45,6 @@ let handleDelete = (id) => {
 }
 
 
-
 let handleEdit = (item) => {
     setEditmodal(true)
     setFormData({
@@ -74,14 +73,14 @@ let handleUpdateForm = (e) => {
 
 let handleUpdateTodo = async () => {
     setLoader(true)
-    
+    console.log(FormData);
     const updatetodo = await axios.put("http://localhost:8000/api/v1/todo/updatetodo",{
         fullname: FormData.fullname,
         email: FormData.email,
         department: FormData.department,
         designation: FormData.designation,
         idnumber: FormData.employeeid,
-        blood: item.blood,
+        blood: FormData.blood,
     },{
         headers:{
             id:FormData.editid
@@ -89,7 +88,6 @@ let handleUpdateTodo = async () => {
     })
     setEditmodal(false)
     setLoader(false)
-    location.reload()
     
 }
 
@@ -179,30 +177,6 @@ let handleUpdateTodo = async () => {
                 </div>
             ))
         }
-                 {/* <div className='input_group'>
-                    <label>Department</label>
-                    <select name='department'>
-                        <option name='department' value="others" autoFocus>Others</option>
-                        <option name='department' value="Web & Software">Web & Software</option>
-                        <option name='department' value="Graphics & Multimedia">Graphics & Multimedia</option>
-                        <option name='department' value="Digital Marketing">Digital Marketing</option>
-                        <option name='department' value="Cyber Security">Cyber Security</option>
-                        <option name='department' value="Film & Media">Film & Media</option>
-                    </select>
-                </div> */}
-                  {/* <div className='input_group'>
-                    <label>Blood Group</label>
-                    <select>
-                        <option autoFocus>A+</option>
-                        <option>A-</option>
-                        <option>B+</option>
-                        <option>B-</option>
-                        <option>O+</option>
-                        <option>O-</option>
-                        <option>AB+</option>
-                        <option>AB-</option>
-                    </select>
-                </div> */}
                 {/* <div className='input_group'>
                     <label>Employee Image</label>
                     <input className='file' type='file'/>
