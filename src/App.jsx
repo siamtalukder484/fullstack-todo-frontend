@@ -12,7 +12,6 @@ function App() {
       <div className='main'>
         <div className='main_body'>
             <TodoCard/>
-            <GithubCon/>
         </div>
         <div className='create_body'>
             <CreateTodo/>

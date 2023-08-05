@@ -19,7 +19,7 @@ const TodoCard = () => {
         email: "",
         designation: "",
         employeeid: "",
-    
+        blood: "",
     })
 
 // get all todo
@@ -55,6 +55,7 @@ let handleEdit = (item) => {
         department: item.department,
         designation: item.designation,
         employeeid: item.idnumber,
+        blood: item.blood,
     });
 }
 
@@ -79,7 +80,8 @@ let handleUpdateTodo = async () => {
         email: FormData.email,
         department: FormData.department,
         designation: FormData.designation,
-        idnumber: FormData.employeeid
+        idnumber: FormData.employeeid,
+        blood: item.blood,
     },{
         headers:{
             id:FormData.editid
@@ -125,7 +127,7 @@ let handleUpdateTodo = async () => {
                 </div>
                 <div className='input_group'>
                     <label>Department</label>
-                    <select onChange={handleUpdateForm} name='department'>
+                    <select onChange={handleUpdateForm} name='department' value={FormData.department}>
                         <option value="null">Select Department</option>
                         <option value="Web & Software">Web & Software</option>
                         <option value="Graphics & Multimedia">Graphics & Multimedia</option>
@@ -141,6 +143,20 @@ let handleUpdateTodo = async () => {
                 <div className='input_group'>
                     <label>Employee ID</label>
                     <input onChange={handleUpdateForm} name='employeeid' value={FormData.employeeid} type='number' placeholder='Employee ID'/>
+                </div>
+                <div className='input_group'>
+                    <label>Blood Group</label>
+                    <select onChange={handleUpdateForm} name='blood' value={FormData.blood}>
+                        <option>Select Blood</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
                 </div>
                 <div className='input_group'>
                     <button onClick={handleUpdateTodo}>Update</button>
