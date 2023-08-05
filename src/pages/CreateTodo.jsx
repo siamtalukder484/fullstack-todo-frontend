@@ -6,6 +6,7 @@ const CreateTodo = () => {
 
     let [loader, setLoader] = useState(false);
    let [nameerr,setnameerr] = useState("")
+   let [departmenterr,setdepartmenterr] = useState("")
    let [load,setLoad] = useState(false)
 
     let [FormData, setFormData] = useState({
@@ -14,15 +15,15 @@ const CreateTodo = () => {
         department: "",
         designation: "",
         employeeid: "",
-
+        blood: "",
     })
     let [error, setError] = useState({
         fullname: "",
         email: "",
         department: "",
-        department: "",
         designation: "",
         employeeid: "",
+        blood: "",
     })
     let handleForm = (e) => {
         let {name, value} = e.target
@@ -32,27 +33,30 @@ const CreateTodo = () => {
 
     let handleSubmit = async () => {
         setLoader(true)
-        console.log(FormData);
-        // try {
-        //     const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',{
-        //         fullname: FormData.fullname,
-        //         email: FormData.email,
-        //         designation: FormData.designation,
-        //         idnumber: FormData.employeeid
-        //     })
-        //     setnameerr(response.data.error)
-        //     console.log(response);
-        //     setLoad(!load)
-        // }
-        // catch (error) {
-        //     console.error('Error posting data:', error);
-        // }
-        // setFormData({
-        //     fullname: "",
-        //     email: "",
-        //     designation: "",
-        //     employeeid: "",
-        // })
+
+        try {
+            const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',{
+                fullname: FormData.fullname,
+                email: FormData.email,
+                department: FormData.department,
+                designation: FormData.designation,
+                idnumber: FormData.employeeid,
+                blood: FormData.blood
+            })
+            setnameerr(response.data.error)
+            setLoad(!load)
+        }
+        catch (error) {
+            console.error('Error posting data:', error);
+        }
+        setFormData({
+            fullname: "",
+            email: "",
+            department: "",
+            designation: "",
+            employeeid: "",
+            blood: ""
+        })
         setLoader(false)
        
     }
@@ -87,7 +91,7 @@ const CreateTodo = () => {
         <div className='input_group'>
             <label>Department</label>
             <select onChange={handleForm} name='department'>
-                <option>Select Department</option>
+                <option value="null">Select Department</option>
                 <option value="Web & Software">Web & Software</option>
                 <option value="Graphics & Multimedia">Graphics & Multimedia</option>
                 <option value="Digital Marketing">Digital Marketing</option>
@@ -103,19 +107,20 @@ const CreateTodo = () => {
             <label>Employee ID</label>
             <input name='employeeid' onChange={handleForm} value={FormData.employeeid} type='number' placeholder='Employee ID'/>
         </div>
-        {/* <div className='input_group'>
+        <div className='input_group'>
             <label>Blood Group</label>
-            <select>
-                <option autoFocus>A+</option>
-                <option>A-</option>
-                <option>B+</option>
-                <option>B-</option>
-                <option>O+</option>
-                <option>O-</option>
-                <option>AB+</option>
-                <option>AB-</option>
+            <select onChange={handleForm} name='blood'>
+                <option>Select Blood</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
             </select>
-        </div> */}
+        </div>
         {/* <div className='input_group'>
             <label>Employee Image</label>
             <input className='file' type='file'/>

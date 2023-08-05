@@ -22,7 +22,7 @@ const TodoCard = () => {
     
     })
 
-
+// get all todo
     useEffect(()=>{
         const socket = socketIOClient(ENDPOINT);
         const fetchData = async () => {
@@ -32,7 +32,7 @@ const TodoCard = () => {
         fetchData()
     },[load])
     
-
+// delete a single todo
 let handleDelete = (id) => {
     axios.delete(`https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/deletetodo`,{
         headers:{
@@ -44,12 +44,15 @@ let handleDelete = (id) => {
     })
 }
 
+
+
 let handleEdit = (item) => {
     setEditmodal(true)
     setFormData({
         editid: item._id,
         fullname: item.fullname,
         email: item.email,
+        department: item.department,
         designation: item.designation,
         employeeid: item.idnumber,
     });
@@ -74,6 +77,7 @@ let handleUpdateTodo = async () => {
     const updatetodo = await axios.put("http://localhost:8000/api/v1/todo/updatetodo",{
         fullname: FormData.fullname,
         email: FormData.email,
+        department: FormData.department,
         designation: FormData.designation,
         idnumber: FormData.employeeid
     },{
@@ -120,6 +124,17 @@ let handleUpdateTodo = async () => {
                     <input onChange={handleUpdateForm} name='email' value={FormData.email} type='email' placeholder='Employee Email'/>
                 </div>
                 <div className='input_group'>
+                    <label>Department</label>
+                    <select onChange={handleUpdateForm} name='department'>
+                        <option value="null">Select Department</option>
+                        <option value="Web & Software">Web & Software</option>
+                        <option value="Graphics & Multimedia">Graphics & Multimedia</option>
+                        <option value="Digital Marketing">Digital Marketing</option>
+                        <option value="Cyber Security">Cyber Security</option>
+                        <option value="Film & Media">Film & Media</option>
+                    </select>
+                </div>
+                <div className='input_group'>
                     <label>Designation</label>
                     <input onChange={handleUpdateForm} name='designation' value={FormData.designation} type='text' placeholder='Designation'/>
                 </div>
@@ -138,8 +153,10 @@ let handleUpdateTodo = async () => {
                 <div className='item' key={item._id}>
                     <h3>Name: {item.fullname}</h3>
                     <h4>Email: {item.email}</h4>
+                    <p>Department: {item.department}</p>
                     <h4>Designation: {item.designation}</h4>
                     <p>Employee ID: {item.idnumber}</p>
+                    <p>Blood Group: {item.blood}</p>
                     <button onClick={()=>handleDelete(item._id)}>Delete</button>
                     &nbsp;
                     <button onClick={()=>handleEdit(item)}>Edit</button>
