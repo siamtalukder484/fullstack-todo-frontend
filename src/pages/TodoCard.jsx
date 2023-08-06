@@ -26,7 +26,7 @@ const TodoCard = () => {
     useEffect(()=>{
         const socket = socketIOClient(ENDPOINT);
         const fetchData = async () => {
-            let response = await axios.get('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/getalltodo')
+            let response = await axios.get('http://localhost:8000/api/v1/todo/getalltodo')
             setPost(response.data)
         }
         fetchData()
@@ -34,7 +34,7 @@ const TodoCard = () => {
     
 // delete a single todo
 let handleDelete = (id) => {
-    axios.delete(`https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/deletetodo`,{
+    axios.delete(`http://localhost:8000/api/v1/todo/deletetodo`,{
         headers:{
             id:id
         }
@@ -55,6 +55,7 @@ let handleEdit = (item) => {
         designation: item.designation,
         employeeid: item.idnumber,
         blood: item.blood,
+        avater: item.avater
     });
 }
 
@@ -114,6 +115,10 @@ let handleUpdateTodo = async () => {
             <div className='update_todo_main'>
                 <h3>Update Employee ID</h3>
                 <div className='input_group'>
+                    <img style={{width:"100px"}} src={FormData.avater}/>
+                </div>
+
+                <div className='input_group'>
                     <label>Name</label>
                     <input onChange={handleUpdateForm} name='editid' value={FormData.editid} type='hidden'/>
                     <input onChange={handleUpdateForm} name='fullname' value={FormData.fullname} type='text' placeholder='Employee Name'/>
@@ -165,6 +170,7 @@ let handleUpdateTodo = async () => {
         {
            post && post.map(item=>(
                 <div className='item' key={item._id}>
+                    <img style={{width:"50%"}} src={item.avater}/>
                     <h3>Name: {item.fullname}</h3>
                     <h4>Email: {item.email}</h4>
                     <p>Department: {item.department}</p>
