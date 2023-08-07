@@ -10,6 +10,9 @@ const CreateTodo = () => {
    let [load,setLoad] = useState(false)
    const [selectedFile, setSelectedFile] = useState(null);
 
+   const { VITE_SOCKET_ENDPOINT } = import.meta.env;
+   console.log(VITE_SOCKET_ENDPOINT);
+
     let [FormInfo, setFormInfo] = useState({
         fullname: "",
         email: "",
@@ -53,7 +56,7 @@ const CreateTodo = () => {
         data.append('blood', FormInfo.blood);
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/todo/createtodo',data,{
+            const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',data,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
                   },
