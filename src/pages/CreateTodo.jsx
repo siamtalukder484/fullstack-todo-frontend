@@ -56,7 +56,7 @@ const CreateTodo = () => {
         data.append('blood', FormInfo.blood);
 
         try {
-            const response = await axios.post('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/createtodo',data,{
+            const response = await axios.post('http://localhost:8000/api/v1/todo/createtodo',data,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
                   },

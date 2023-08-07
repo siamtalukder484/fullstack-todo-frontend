@@ -30,7 +30,7 @@ const TodoCard = () => {
     useEffect(()=>{
         const socket = socketIOClient(ENDPOINT);
         const fetchData = async () => {
-            let response = await axios.get('https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/getalltodo')
+            let response = await axios.get('http://localhost:8000/api/v1/todo/getalltodo')
             setPost(response.data)
         }
         fetchData()
@@ -38,7 +38,7 @@ const TodoCard = () => {
     
 // delete a single todo
 let handleDelete = (id) => {
-    axios.delete(`https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/deletetodo`,{
+    axios.delete(`http://localhost:8000/api/v1/todo/deletetodo`,{
         headers:{
             id:id
         }
@@ -79,7 +79,7 @@ let handleUpdateForm = (e) => {
 let handleUpdateTodo = async () => {
     setLoader(true)
     console.log(FormData);
-    const updatetodo = await axios.put("https://fullstack-todo-backend-5cwv.onrender.com/api/v1/todo/updatetodo",{
+    const updatetodo = await axios.put("http://localhost:8000/api/v1/todo/updatetodo",{
         fullname: FormData.fullname,
         email: FormData.email,
         department: FormData.department,
@@ -101,8 +101,6 @@ let handleDownload = async (item) => {
     const pdf = new jsPDF();
     const imgData = item.avater;
     pdf.addImage(imgData, 'JPEG', 10, 70, 50, 50);
-
-
     pdf.text(`Name: ${item.fullname}`, 10, 10);
     pdf.text(`Email: ${item.email}`, 10, 20);
     pdf.text(`Department: ${item.department}`, 10, 30);
