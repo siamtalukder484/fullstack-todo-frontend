@@ -92,6 +92,10 @@ let handleUpdateTodo = async () => {
     
 }
 
+let handleDownload = (item) => {
+    console.log(item);
+}
+
 
   return (
     <div className='item_main'>
@@ -180,6 +184,7 @@ let handleUpdateTodo = async () => {
                     <button onClick={()=>handleDelete(item._id)}>Delete</button>
                     &nbsp;
                     <button onClick={()=>handleEdit(item)}>Edit</button>
+                    <button onClick={() => handleDownload(item)}>Download</button>
                 </div>
             ))
         }
